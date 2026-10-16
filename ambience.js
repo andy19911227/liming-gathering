@@ -123,15 +123,36 @@
   pond.removeAttribute('aria-hidden');
   Array.from(pond.children).forEach(el => el.setAttribute('aria-hidden', 'true'));
   const touch = document.createElement('button');
-  touch.type = 'button'; touch.className = 'pond-touch'; touch.textContent = '輕點水面 · 泛起微光';
+  touch.type = 'button'; touch.className = 'pond-touch';
+  touch.innerHTML = '<span class="pond-hint">輕點水面 · 泛起微光</span>';
+  touch.setAttribute('aria-label', '輕點水面，泛起微光');
   pond.append(touch);
-  touch.addEventListener('click', () => {
-    if (reduced.matches || root.classList.contains('motion-paused')) return;
-    if (pond.querySelectorAll('.pond-ripple').length >= 3) return;
+  const feedback = document.createElement('span');
+  feedback.className = 'pond-feedback'; feedback.setAttribute('role', 'status');
+  pond.append(feedback);
+  let feedbackTimer;
+  touch.addEventListener('click', event => {
+    const still = reduced.matches || root.classList.contains('motion-paused');
+    const rect = pond.getBoundingClientRect();
+    // A full-surface native button supports touch, mouse, Enter and Space.
+    // Keep the complete ellipse inside the pond, away from the instruction.
+    const x = event.detail ? event.clientX - rect.left : rect.width / 2;
+    const y = event.detail ? event.clientY - rect.top : 108;
     const ring = document.createElement('span');
-    ring.className = 'pond-ripple'; ring.setAttribute('aria-hidden', 'true');
-    ring.style.left = '50%'; ring.style.top = '72%'; pond.append(ring);
+    ring.className = 'pond-ripple' + (still ? ' is-still' : '');
+    ring.setAttribute('aria-hidden', 'true');
+    ring.style.left = Math.max(88, Math.min(rect.width - 88, x)) + 'px';
+    ring.style.top = Math.max(94, Math.min(rect.height - 36, y)) + 'px';
+    // Replace the oldest feedback instead of silently ignoring repeated taps.
+    const rings = pond.querySelectorAll('.pond-ripple');
+    if (rings.length >= 3) rings[0].remove();
+    pond.append(ring);
+    feedback.textContent = still ? '微光已亮起 · 靜態回饋' : '微光已泛起';
+    clearTimeout(feedbackTimer);
+    feedbackTimer = setTimeout(() => { feedback.textContent = ''; }, 1800);
     ring.addEventListener('animationend', () => ring.remove(), {once:true});
+    // Static feedback must also clean up when animations are disabled/paused.
+    setTimeout(() => ring.remove(), still ? 1800 : 1400);
   });
   if (!(window.AudioContext || window.webkitAudioContext)) {
     play.disabled = true; volume.disabled = true;
