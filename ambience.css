@@ -1,0 +1,25 @@
+/* Dawn ambience — original, dependency-free enhancement. */
+.ambience{margin:0 auto 24px;padding:16px 20px;border:1px solid var(--line);border-radius:18px;background:var(--card);display:flex;align-items:center;flex-wrap:wrap;gap:12px 18px}
+.ambience[hidden]{display:none}
+.ambience-title{color:var(--green);font-weight:700}.ambience small{display:block;color:var(--sub);font-weight:400;font-size:12px}
+.ambience button,.pond-touch{font:inherit;color:var(--navy);border:1px solid var(--line);border-radius:99px;background:var(--bg);padding:8px 14px;min-height:44px;cursor:pointer}
+.ambience button:hover,.pond-touch:hover{border-color:var(--gold)}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
+.volume-control{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--sub)}
+.volume-control input{width:90px;min-height:44px;accent-color:var(--green)}
+.volume-control output{min-width:3ch}.ambience-status{flex-basis:100%;font-size:13px;color:var(--sub)}
+.music-meter{display:inline-flex;align-items:center;gap:3px;height:16px;margin-right:5px;vertical-align:middle}
+.music-meter i{width:3px;height:5px;border-radius:3px;background:var(--gold)}
+.is-playing .music-meter i{animation:music-breathe 1.8s ease-in-out infinite alternate}.is-playing .music-meter i:nth-child(2){animation-delay:-.6s}.is-playing .music-meter i:nth-child(3){animation-delay:-1.2s}
+@keyframes music-breathe{to{height:15px}}
+.pond-touch{position:absolute;z-index:2;left:50%;top:28px;transform:translateX(-50%);background:#fbfaf6ed;color:#1F3A5F;white-space:nowrap}
+.pond-ripple{position:absolute;z-index:1;width:32px;height:14px;margin:-7px 0 0 -16px;border:2px solid #fff7d3;border-radius:50%;pointer-events:none;animation:pond-ring 1.6s ease-out forwards;box-shadow:0 0 14px #fff7d388}
+@keyframes pond-ring{from{transform:scale(.3);opacity:1}to{transform:scale(7);opacity:0}}
+/* Freeze decorative movement without hiding headings or rotating copy. */
+html.motion-paused *,html.motion-paused *::before,html.motion-paused *::after{animation-play-state:paused!important;transition:none!important;scroll-behavior:auto!important}
+html.motion-paused .rot span{animation:none!important;opacity:0!important;transform:none!important}
+html.motion-paused .rot span:first-child,html.motion-paused h1 span{opacity:1!important;transform:none!important}
+html.motion-paused .rv{opacity:1;transform:none}
+.rot{min-height:68px;height:auto}.rot span{max-width:100%}
+@media(max-width:400px){.ambience{padding:14px;gap:10px}.ambience-title{flex-basis:100%}.hero .grid2>div{min-width:0}.rot{font-size:17px}.addr{font-size:14px}.hd>div{min-width:0}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.rot span{opacity:0!important}.rot span:first-child,h1 span{opacity:1!important;transform:none!important}.rv{opacity:1;transform:none}.pond-ripple{display:none}}

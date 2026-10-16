@@ -165,6 +165,9 @@ h1 span:nth-child(2){animation-delay:.1s}h1 span:nth-child(3){animation-delay:.2
 @media(max-width:760px){.sunface{display:none}.hd .ill{width:60px;height:60px}}
 @media(prefers-reduced-motion:reduce){.cloud,.bfly,.bfly .wl,.bfly .wr,.sway,.steam path,.sunface .rays,.bub,.grass path{animation:none}.cloud,.bfly,.bub{display:none}}
 </style>
+<link rel="stylesheet" href="ambience.css?v=20261016">
+<noscript><style>.rv{opacity:1;transform:none}.rot span{animation:none;opacity:0}.rot span:first-child{opacity:1}</style></noscript>
+<script src="ambience.js?v=20261016" defer></script>
 </head>
 <body>
 <nav><div class="wrap"><b>黎明小聚</b><div><a href="#features">特色</a><a href="#spaces">空間</a><a href="#visit">位置</a></div></div></nav>
@@ -185,6 +188,13 @@ h1 span:nth-child(2){animation-delay:.1s}h1 span:nth-child(3){animation-delay:.2
 </div></div></header>
 
 <main class="wrap">
+<div class="ambience" aria-label="小聚氛圍控制" data-version="dawn-ambience-20261016" hidden>
+<div class="ambience-title">留一點時間，給自己<small>原創環境配樂「黎明」 · 預設不播放</small></div>
+<button id="music-toggle" type="button" aria-pressed="false"><span class="music-meter" aria-hidden="true"><i></i><i></i><i></i></span><span class="music-label">播放音樂</span></button>
+<div class="volume-control"><label for="music-volume">音量</label><input id="music-volume" type="range" min="0" max="100" value="35"><output id="volume-value" for="music-volume">35%</output></div>
+<button id="motion-toggle" type="button" aria-pressed="false">暫停動畫</button>
+<p class="ambience-status" id="music-status" role="status">按下播放才會有聲音；離開分頁會暫停。</p>
+</div>
 <section id="features" class="rv">
 <h2>三大特色</h2>
 <p class="sub2">讓工作更輕鬆的三件事</p>
